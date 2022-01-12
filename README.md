@@ -12,7 +12,7 @@ Faire "npm start".
 
 Le serveur devrait se lancer sur votre localhost:3000
 
-## Front (déjà fournie par OCR dans le cadre de ce projet) ##
+## Front (déjà fourni par OCR dans le cadre de ce projet) ##
 
 ## Installation ##
 
