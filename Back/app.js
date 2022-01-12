@@ -31,19 +31,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Tentative de permettre le maintien dans le browser de l'historique des URL
-
-// app.use(express.static(path.join(__dirname, "public")));
-// app.use("/js", express.static(__dirname + "/js"));
-// app.use("/dist", express.static(__dirname + "/../dist"));
-// app.use("/css", express.static(__dirname + "/css"));
-// app.use("/partials", express.static(__dirname + "/partials"));
-
-// app.all("/*", function (req, res) {
-//   // Just send the index.html for other files to support HTML5Mode
-//   res.sendFile("public/index.html");
-// });
-
 app.use("/api/auth", userRoutes);
 app.use("/api/sauces", stuffRoutes);
 app.use("/images", express.static(path.join(__dirname, "images")));

@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     } else {
       next();
     }
-  } catch (error) {
+  } catch {
     res.writeHead(301, { Location: "http://localhost:8080/" });
     res.end();
   }
