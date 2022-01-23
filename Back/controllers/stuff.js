@@ -16,19 +16,30 @@ exports.createSauce = (req, res, next) => {
   sauce
     .save()
     .then(() => res.status(201).json({ message: "Objet enregistré !" }))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) =>
+      res.status(400).json({ error: "Impossible de créer votre sauce" })
+    );
 };
 
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
     .then((sauces) => res.status(200).json(sauces))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) =>
+      res
+        .status(400)
+        .json({ error: "Aucune sauce présente dans la base de données" })
+    );
 };
 
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
-    .then((sauce) => res.status(200).json(sauce))
-    .catch((error) => res.status(404).json({ error }));
+    .then((sauce) => {
+      console.log(sauce);
+      res.status(200).json(sauce);
+    })
+    .catch((error) =>
+      res.status(404).json({ error: "Cette sauce n'existe pas" })
+    );
 };
 
 exports.updateSauce = (req, res, next) => {
@@ -42,7 +53,9 @@ exports.updateSauce = (req, res, next) => {
     : { ...req.body };
   Sauce.updateOne({ _id: req.params.id }, { ...sauceFile, _id: req.params.id })
     .then(() => res.status(200).json({ message: "Sauce modifiée!" }))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) =>
+      res.status(400).json({ error: "Mise à jour de la sauce impossible" })
+    );
 };
 
 exports.deleteSauce = (req, res, next) => {
@@ -52,7 +65,11 @@ exports.deleteSauce = (req, res, next) => {
       fs.unlink(`images/${filename}`, () => {
         Sauce.deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: "Sauce supprimée !" }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch((error) =>
+            res
+              .status(400)
+              .json({ error: "Impossible de supprimer cette sauce" })
+          );
       });
     })
     .catch((error) => res.status(500).json({ error }));
@@ -71,7 +88,9 @@ exports.likeSauce = (req, res, next) => {
           }
         )
           .then(() => res.status(200).json({ message: "Avis ajouté!" }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch((error) =>
+            res.status(400).json({ error: "Impossible d'ajouter votre avis" })
+          );
       }
       if (req.body.like == -1) {
         Sauce.updateOne(
@@ -83,7 +102,9 @@ exports.likeSauce = (req, res, next) => {
           }
         )
           .then(() => res.status(200).json({ message: "Avis ajouté!" }))
-          .catch((error) => res.status(400).json({ error }));
+          .catch((error) =>
+            res.status(400).json({ error: "Impossible d'ajouter votre avis" })
+          );
       }
       if (req.body.like == 0) {
         let likedIndex = sauce.usersLiked.indexOf(req.body.userId);
@@ -98,7 +119,9 @@ exports.likeSauce = (req, res, next) => {
             }
           )
             .then(() => res.status(200).json({ message: "Avis ajouté!" }))
-            .catch((error) => res.status(400).json({ error }));
+            .catch((error) =>
+              res.status(400).json({ error: "Impossible d'ajouter votre avis" })
+            );
         }
         if (dislikedIndex !== -1)
           Sauce.updateOne(
@@ -110,8 +133,10 @@ exports.likeSauce = (req, res, next) => {
             }
           )
             .then(() => res.status(200).json({ message: "Avis ajouté!" }))
-            .catch((error) => res.status(400).json({ error }));
+            .catch((error) =>
+              res.status(400).json({ error: "Impossible d'ajouter votre avis" })
+            );
       }
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ error: "Sauce introuvable" }));
 };

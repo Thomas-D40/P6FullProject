@@ -11,7 +11,6 @@ module.exports = (req, res, next) => {
       next();
     }
   } catch {
-    res.writeHead(301, { Location: "http://localhost:8080/" });
-    res.end();
+    res.status(401).json({ error: "Invalid Request!" });
   }
 };
