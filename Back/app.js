@@ -15,7 +15,7 @@ app.use(express.json());
 
 mongoose
   .connect(
-    "mongodb+srv://tom:azer@cluster0.pjwiz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    `mongodb+srv://${process.env.BDDID}:${process.env.BDDMDP}@cluster0.pjwiz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connection réussie"))
